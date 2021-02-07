@@ -1,18 +1,14 @@
 "use strict";
 
 const { graphqlHTTP } = require("express-graphql");
-const { graphqlUploadExpress } = require("graphql-upload");
-const express = require("express");
-
 const {
   createTypeGraphQLSchema,
 } = require("../lib/schemas/createTypeGraphQLSchema");
+const app = require("fastify")();
 
-const app = express();
 createTypeGraphQLSchema().then((schema) => {
-  app.use(
+  app.post(
     "/graphql",
-    graphqlUploadExpress(),
     graphqlHTTP({
       schema,
     }),

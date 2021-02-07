@@ -1,13 +1,14 @@
 "use strict";
 
-require("dd-trace").init();
 const { graphqlHTTP } = require("express-graphql");
 const { graphqlUploadExpress } = require("graphql-upload");
 const express = require("express");
-const { createApolloSchema } = require("../lib/schemas/createApolloSchema");
+const {
+  createGraphqlComposeSchema,
+} = require("../lib/schemas/createGraphqlCompose");
 
 const app = express();
-const schema = createApolloSchema();
+const schema = createGraphqlComposeSchema();
 app.use(
   "/graphql",
   graphqlUploadExpress(),

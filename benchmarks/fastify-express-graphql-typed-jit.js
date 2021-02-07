@@ -1,30 +1,26 @@
 "use strict";
 
 const { graphqlHTTP } = require("express-graphql");
-const express = require("express");
-const { parse } = require("graphql");
+const app = require("fastify")();
 const { compileQuery } = require("graphql-jit");
-const { graphqlUploadExpress } = require("graphql-upload");
+const { parse } = require("graphql");
 const {
-  createAsyncTypeGraphQLSchema,
+  createTypeGraphQLSchema,
 } = require("../lib/schemas/createTypeGraphQLSchema");
-
-const app = express();
 
 const cache = {};
 
-createAsyncTypeGraphQLSchema().then((schema) => {
-  app.use(
+createTypeGraphQLSchema().then((schema) => {
+  app.post(
     "/graphql",
-    graphqlUploadExpress(),
     graphqlHTTP((_, __, { query }) => {
       if (!(query in cache)) {
         const document = parse(query);
         cache[query] = compileQuery(schema, document);
       }
-
       return {
         schema,
+        graphiql: true,
         customExecuteFn: ({ rootValue, variableValues, contextValue }) =>
           cache[query].query(rootValue, contextValue, variableValues),
       };
