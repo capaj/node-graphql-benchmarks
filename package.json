@@ -40,6 +40,7 @@
     "cli-table": "^0.3.4",
     "commander": "^7.0.0",
     "dd-trace": "^0.30.5",
+    "decapi": "^0.9.3",
     "express": "^4.17.1",
     "express-gql": "^0.0.5",
     "express-graphql": "^0.12.0",

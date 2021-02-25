@@ -9,12 +9,12 @@ import {
   ID,
   FieldResolver,
   Root,
-  UseMiddleware
+  UseMiddleware,
 } from "type-graphql";
 import { data } from "../data";
-import md5 = require("md5");
+import md5 from "md5";
 
-@ObjectType()
+@ObjectType({ simpleResolvers: true })
 class Book {
   @Field(() => ID)
   id: string;
@@ -24,7 +24,7 @@ class Book {
   numPages: number;
 }
 
-@ObjectType()
+@ObjectType({ simpleResolvers: true })
 class Author {
   @Field(() => ID)
   id: string;
@@ -96,24 +96,24 @@ class AsyncMiddlewareResolver {
 
 export function createTypeGraphQLSchema() {
   return buildSchema({
-    resolvers: [SimpleResolver]
+    resolvers: [SimpleResolver],
   });
 }
 
 export function createAsyncTypeGraphQLSchema() {
   return buildSchema({
-    resolvers: [AsyncResolver]
+    resolvers: [AsyncResolver],
   });
 }
 
 export function createMiddlewareTypeGraphQLSchema() {
   return buildSchema({
-    resolvers: [MiddlewareResolver]
+    resolvers: [MiddlewareResolver],
   });
 }
 
 export function createAsyncMiddlewareTypeGraphQLSchema() {
   return buildSchema({
-    resolvers: [AsyncMiddlewareResolver]
+    resolvers: [AsyncMiddlewareResolver],
   });
 }
